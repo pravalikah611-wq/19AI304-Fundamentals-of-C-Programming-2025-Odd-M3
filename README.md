@@ -28,7 +28,42 @@ To formulate a C program to convert a decimal number into its binary equivalent 
 ### Step 8: 
    Stop
 # Program:
+
+#include <stdio.h>
+
+int main()
+{
+    int decimal, binary[32], i = 0, j;
+
+    scanf("%d", &decimal);
+
+    if (decimal == 0)
+    {
+        printf("0");
+        return 0;
+    }
+
+    while (decimal > 0)
+    {
+        binary[i] = decimal % 2;
+        decimal = decimal / 2;
+        i++;
+    }
+
+    for (j = i - 1; j >= 0; j--)
+    {
+        printf("%d", binary[j]);
+    }
+
+    return 0;
+}
+
+<img width="1889" height="823" alt="image" src="https://github.com/user-attachments/assets/7034c01d-aafa-49e4-9172-a1d5e163814b" />
+
 # Output:
+
+<img width="1889" height="823" alt="image" src="https://github.com/user-attachments/assets/ac8eab14-801b-46d4-917b-724eee6ee92e" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -67,7 +102,74 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 9: 
   Stop
 # Program:
+
+#include <stdio.h>
+
+int main()
+{
+    int a[10][10], r, c;
+    int i, j, k;
+    int saddleFound = 0;
+
+    scanf("%d %d", &r, &c);
+
+    for(i = 0; i < r; i++)
+    {
+        for(j = 0; j < c; j++)
+        {
+            scanf("%d", &a[i][j]);
+        }
+    }
+
+    for(i = 0; i < r; i++)
+    {
+        int min = a[i][0];
+        int col = 0;
+
+        for(j = 1; j < c; j++)
+        {
+            if(a[i][j] < min)
+            {
+                min = a[i][j];
+                col = j;
+            }
+        }
+
+        int isSaddle = 1;
+
+        for(k = 0; k < r; k++)
+        {
+            if(a[k][col] > min)
+            {
+                isSaddle = 0;
+                break;
+            }
+        }
+
+        if(isSaddle)
+        {
+            printf("Saddle Point = %d\n", min);
+            printf("Position = (%d,%d)\n", i, col);
+            saddleFound = 1;
+            break;
+        }
+    }
+
+    if(!saddleFound)
+    {
+        printf("No Saddle Point");
+    }
+
+    return 0;
+}
+<img width="1848" height="858" alt="image" src="https://github.com/user-attachments/assets/484dcf88-72af-4e4d-bcdc-3c349b3559f5" />
+
+<img width="1705" height="610" alt="image" src="https://github.com/user-attachments/assets/4800eaff-ba78-4d17-97b0-2bcfb686e506" />
+
+
 # Output:
+<img width="1848" height="858" alt="image" src="https://github.com/user-attachments/assets/333ece59-61e3-420f-a735-ac4ed0e7a831" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -101,7 +203,43 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 10: 
   Stop
 # Program:
+
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char str[100], temp;
+    int i, len;
+
+    fgets(str, sizeof(str), stdin);
+
+    len = strlen(str);
+
+    if(str[len - 1] == '\n')
+    {
+        str[len - 1] = '\0';
+        len--;
+    }
+
+    for(i = 0; i < len / 2; i++)
+    {
+        temp = str[i];
+        str[i] = str[len - i - 1];
+        str[len - i - 1] = temp;
+    }
+
+    printf("%s", str);
+
+    return 0;
+}
+
+<img width="1867" height="777" alt="image" src="https://github.com/user-attachments/assets/09125d2b-22e8-413e-947b-87d354705ac7" />
+
 # Output:
+
+<img width="1867" height="777" alt="image" src="https://github.com/user-attachments/assets/b4bc736c-bbd4-488c-bb1a-ce5adf244c11" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -135,7 +273,38 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 8:
   Stop
 # Program:
+#include <stdio.h>
+
+int main()
+{
+    char str[100];
+    int freq[256] = {0};
+    int i;
+
+    scanf("%s", str);
+
+    for(i = 0; str[i] != '\0'; i++)
+    {
+        freq[(unsigned char)str[i]]++;
+    }
+
+    for(i = 0; i < 256; i++)
+    {
+        if(freq[i] != 0)
+        {
+            printf("%c = %d\n", i, freq[i]);
+        }
+    }
+
+    return 0;
+}
+
+<img width="1715" height="813" alt="Screenshot 2026-06-01 153949" src="https://github.com/user-attachments/assets/89c5af60-795d-4f34-af2d-4c1c0152003a" />
+
 # Output:
+
+<img width="1715" height="813" alt="Screenshot 2026-06-01 153949" src="https://github.com/user-attachments/assets/39bbdf67-5048-41c6-b907-bb99b1738662" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -169,7 +338,65 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 8: 
   Stop
 # Program:
+
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char str[200];
+    char words[50][50];
+    int count = 0, i, j, found;
+
+    printf("Enter a string: ");
+    fgets(str, sizeof(str), stdin);
+
+    str[strcspn(str, "\n")] = '\0';
+
+    char *token = strtok(str, " ");
+
+    while (token != NULL)
+    {
+        found = 0;
+
+        for (i = 0; i < count; i++)
+        {
+            if (strcmp(words[i], token) == 0)
+            {
+                found = 1;
+                break;
+            }
+        }
+
+        if (!found)
+        {
+            strcpy(words[count], token);
+            count++;
+        }
+
+        token = strtok(NULL, " ");
+    }
+
+    printf("String after removing duplicate words: ");
+
+    for (i = 0; i < count; i++)
+    {
+        printf("%s", words[i]);
+        if (i < count - 1)
+            printf(" ");
+    }
+
+    return 0;
+}
+
+<img width="1877" height="760" alt="image" src="https://github.com/user-attachments/assets/fc27a3ae-7fc5-4b21-9ea3-15dd45d78e87" />
+
+<img width="1904" height="571" alt="image" src="https://github.com/user-attachments/assets/d0eed5c7-f41e-4256-97a0-317cc776ec77" />
+
+
 # Output:
+<img width="1877" height="760" alt="image" src="https://github.com/user-attachments/assets/e2d0f46a-99e3-4024-ace8-98b292867fb3" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
